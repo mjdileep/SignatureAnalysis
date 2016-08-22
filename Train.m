@@ -1,11 +1,9 @@
 function NN=Train(net,conn,timePeriod,noOfPoints,deviceID,intevalSize)%NB:- deviceID is A STRING
     %most resent values are at the last of the array
-    classSet='c1,c2,c3,c4,c5';
     resultColumn='ph1_active_energy';
     dataTable='powerpro';
-    classTable='classes';
     while timePeriod>0
-        classDataSet=ServerSocket(conn,classTable,classSet,intevalSize,deviceID);%getting class values from DB
+        classDataSet=ClassSocket(conn,deviceID);%getting class values from DB
         dataSet=ServerSocket(conn,dataTable,resultColumn,intevalSize,deviceID);%getting column values from DB
         classValues=cell2mat(classDataSet);
         dataPointsTemp=cell2mat(dataSet);
@@ -39,7 +37,7 @@ function NN=Train(net,conn,timePeriod,noOfPoints,deviceID,intevalSize)%NB:- devi
         classes=classValues';
         net = train(net,intertia',classes);
        
-       % pause(60*5);
+        pause(60*5);
         timePeriod=timePeriod-5;
     end
     NN=net;
