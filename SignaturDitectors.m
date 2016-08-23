@@ -5,14 +5,18 @@ while true
         conn=database.ODBCConnection('SignatureAnalysis','dileep','dileep@123');
     end
     table='classes';
-    column='code,interval';
+    column='code,span';
     query=['SELECT ' column ' FROM ' table ' where train = 1'];
     curs = exec(conn,query);
     curs = fetch(curs);
     data = curs.Data;
     close(curs);
-    classValues=cell2mat(classDataSet);
+    classValues=cell2mat(data);
     [n p]=size(classValues);
+    if p==7
+        pause(60);
+        continue;
+    end
     for i=1:n
         id =['x' num2str(classValues(i,1))];
         timePeriod=classValues(i,2);%in 5mins

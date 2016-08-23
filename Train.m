@@ -37,7 +37,7 @@ function NN=Train(net,conn,timePeriod,noOfPoints,deviceID,intevalSize)%NB:- devi
         classes=classValues';
         net = train(net,intertia',classes);
        
-        pause(60*5);
+        pause(60*2);
         timePeriod=timePeriod-5;
     end
     NN=net;
